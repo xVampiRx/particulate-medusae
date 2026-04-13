@@ -18,7 +18,7 @@ var DEBUG_NUDGE = false;
 App.MainScene = MainScene;
 function MainScene() {
   var scene = this.scene = new THREE.Scene();
-  var camera = this.camera = new THREE.PerspectiveCamera(30, 1, 5, 3500);
+  var camera = this.camera = new THREE.PerspectiveCamera(20, 1, 5, 3500);
   var el = this.element = document.getElementById('container');
   this.statsElement = document.getElementById('container-graphs');
 
@@ -29,7 +29,7 @@ function MainScene() {
   this.pxRatio = PMath.clamp(1.5, 2, window.devicePixelRatio);
   this.gravity = -2;
 
-  this.usePostFx = true;
+  this.usePostFx = false;
   this.shouldAnimate = true;
 
   this.initRenderer();
@@ -40,7 +40,8 @@ function MainScene() {
   this.onWindowResize();
 
   var scale = this.height / 1000;
-  camera.position.set(scale * 400, scale * 300, 0);
+  camera.position.set(500, 200, 500); 
+  this.camera.up.set(-1, 1, 0).normalize();
   camera.lookAt(scene.position);
 
   this.loop = App.Looper.create(this, 'update', 'preRender', 1 / 30 * 1000);
@@ -498,6 +499,12 @@ MainScene.prototype.update = function (delta) {
 
   medusae.updateLineWidth(lineWidth);
   nudgeForce.intensity *= 0.8;
+  // console.log(this.medusae.position)
+
+ 
+
+
+
 
   if (this.shouldAnimate) {
     this.statsPhysics.start();
@@ -515,7 +522,7 @@ MainScene.prototype.update = function (delta) {
 };
 
 MainScene.prototype.preRender = function (delta, stepProgress) {
-  this.controls.update();
+  //this.controls.update();
   this.medusae.updateTweens(delta);
 
   if (this.shouldAnimate || this.needsRender || this.medusae.needsRender) {
@@ -553,3 +560,4 @@ MainScene.prototype.render = function (delta, stepProgress) {
 
   this.statsGraphics.end();
 };
+
