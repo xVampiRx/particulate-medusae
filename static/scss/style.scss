@@ -1,4 +1,36 @@
-@import "red-sass/red-sass";
+//@import "red-sass/red-sass";
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  @if $top != auto { top: $top; }
+  @if $right != auto { right: $right; }
+  @if $bottom != auto { bottom: $bottom; }
+  @if $left != auto { left: $left; }
+}
+
+@mixin relative($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: relative;
+  @if $top != auto { top: $top; }
+  @if $right != auto { right: $right; }
+  @if $bottom != auto { bottom: $bottom; }
+  @if $left != auto { left: $left; }
+}
+
+@mixin fixed($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: fixed;
+  @if $top != auto { top: $top; }
+  @if $right != auto { right: $right; }
+  @if $bottom != auto { bottom: $bottom; }
+  @if $left != auto { left: $left; }
+}
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin reset { }
+@mixin border-box { box-sizing: border-box; }
+@mixin clearfix { &:after { content: ""; display: table; clear: both; } }
 @include reset;
 
 @import

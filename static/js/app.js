@@ -1,3 +1,5 @@
+
+
 require('js/application/App');
 require('js/utils/*');
 require('js/components/*');

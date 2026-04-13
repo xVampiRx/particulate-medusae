@@ -13,7 +13,9 @@
 
     <link rel="shortcut icon" href="./build/static/img/favicon.ico">
     <link rel="stylesheet" href="./build/static/css/style.css" />
-
+    
+      <link rel="stylesheet" href="./build/static/css/tests.css" />
+    
   </head>
   <body>
     <article id="info" class="modal info-modal">
@@ -91,10 +93,20 @@
 
     <div id="container"></div>
 
-
-      <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r72/three.min.js"></script>
-      <script src="./build/static/js/app.min.js"></script>
-
+    
+      <script src="./build/static/lib/three/three.js"></script>
+      <script src="./build/static/js/libs.develop.js"></script>
+      <script src="./build/static/js/shader-chunks.develop.js"></script>
+      <script src="./build/static/js/shaders.develop.js"></script>
+      <script src="./build/static/js/app.develop.js"></script>
+      
+      <script>
+        if (location.search.indexOf('test=true') > -1) {
+          document.write('<div id="qunit"></div><div id="qunit-fixture"></div>');
+          document.write('<script src="./build/static/js/tests.js"></scr' + 'ipt>');
+        }
+      </script>
+    
     <script>
       App.STATIC_URL = "./build/static/";
     </script>

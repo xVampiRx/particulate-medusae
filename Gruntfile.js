@@ -1,6 +1,9 @@
 /*jshint node:true*/
 'use strict';
 
+// Добавляем импорт современного Sass в начало файла
+const sassImplementation = require('sass');
+
 var CONFIG = {
   pages: 'pages/',
   source: 'static/',
@@ -28,7 +31,17 @@ module.exports = function (grunt) {
     'uglify',
     'watch'
   ].forEach(function (key) {
-    grunt.config(key, require('./grunt/config/' + key)(CONFIG));
+    // Получаем конфиг из внешнего файла
+    var taskConfig = require('./grunt/config/' + key)(CONFIG);
+    
+    // СПЕЦИАЛЬНЫЙ ХАК ДЛЯ SASS:
+    // Если это конфиг для sass, принудительно вставляем в него реализацию
+    if (key === 'sass') {
+      if (!taskConfig.options) { taskConfig.options = {}; }
+      taskConfig.options.implementation = sassImplementation;
+    }
+
+    grunt.config(key, taskConfig);
   });
 
   grunt.registerTask('server', function (port) {
@@ -40,63 +53,36 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      // Run tasks once before starting watchers
       'develop',
-
-      // Start server
       'connect',
-
-      // Watch files for changes
       'watch'
     ]);
   });
 
-  // Build unminified files during development
   grunt.registerTask('develop', [
     'clean',
-
-    // JS
     'handlebars',
     'neuter',
     'shaderChunks',
-
-    // CSS
     'sass:develop',
     'autoprefixer:develop',
-
-    // HTML
     'haychtml:develop',
-
-    // OTHER FILES
     'copy:develop',
     'copy:build'
   ]);
 
-  // Build minified files for deployment
   grunt.registerTask('build', [
     'clean',
-
-    // JS
     'jshint',
     'handlebars',
     'neuter',
     'shaderChunks',
     'uglify',
-
-    // CSS
     'sass:build',
     'autoprefixer:build',
-
-    // HTML
     'haychtml:build',
-
-    // OTHER FILES
     'copy:build',
-
-    // TEMP FOLDER
     'clean:temp',
-
-    // NOTIFICATION
     'notify:build'
   ]);
 

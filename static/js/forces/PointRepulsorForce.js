@@ -1,4 +1,14 @@
-var PMath = Particulate.Math;
+var PMath = (Particulate && Particulate.Math) ? Particulate.Math : {
+    clamp: function(min, max, value) {
+        return Math.max(min, Math.min(max, value));
+    },
+    randFloat: function(min, max) {
+        return min + Math.random() * (max - min);
+    },
+    randInt: function(min, max) {
+        return Math.floor(min + Math.random() * (max - min + 1));
+    }
+};
 App.PointRepulsorForce = PointRepulsorForce;
 
 function PointRepulsorForce(position, opts) {
