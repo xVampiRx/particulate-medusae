@@ -288,13 +288,13 @@ MainScene.prototype.toggleAnimate = function (event) {
 
   if (audio) {
     if (shouldAnimate) {
-      audio.resume();
+      audio.pause();
     } else {
       audio.pause();
     }
 
     if (audioIsPlaying) {
-      audio.volume = shouldAnimate ? 1 : 0.7;
+      audio.volume = shouldAnimate ? 0 : 0;
     }
   }
 
